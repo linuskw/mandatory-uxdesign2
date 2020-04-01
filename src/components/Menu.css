@@ -1,0 +1,20 @@
+.menuBackground{
+  position: absolute;
+  left: 1;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sideMenu{
+  height: 100%;
+  width: 80%;
+  background-color: white;
+  position: absolute;
+  z-index: 9;
+}
+
+h1{
+  margin-left: 30px;
+  font-weight: normal;
+}
