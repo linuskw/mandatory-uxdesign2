@@ -132,7 +132,7 @@ class QuizGame extends React.Component{
             { this.quizRender() }
           </div>
           { this.state.notAllAnswered ?
-            <h2 className="answerWarning">Answer every question!</h2> :
+            <h4 className="answerWarning">Answer every question!</h4> :
             null }
           <Button color="inherit" onClick={ this.quizWinCheck }>Finish</Button>
         </div>
