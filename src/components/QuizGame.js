@@ -75,16 +75,22 @@ class QuizGame extends React.Component{
       result: 0})
   }
 
-  replace(str){
-    return str.replace(/&#039;/g, '\'')
-      .replace(/&quot;/g, '\"')
-      .replace(/&eacute;/g, '\é')
-      .replace(/&amp;/g, '\&')
-      .replace(/&oacute;/g, '\ó')
-      .replace(/&pi;/g, '\π')
-      .replace(/&euml;/g, '\ë')
-      .replace(/&rsquo;/g, '\'')
-      .replace(/&deg;/g, '\°')
+  convertHTML(str){
+    let element = document.createElement('div');
+
+    function decodeHTMLEntities(str){
+      if (str && typeof str === 'string') {
+        str = str.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '');
+        str = str.replace(/<\/?\w(?:[^"'>]|"[^"]*"|'[^']*')*>/gmi, '');
+        element.innerHTML = str;
+        str = element.textContent;
+        element.textContent = '';
+      }
+
+      return str;
+    }
+
+    return decodeHTMLEntities(str);
   }
 
   quizRender(){
@@ -92,12 +98,12 @@ class QuizGame extends React.Component{
       const { id, question, answers } = questions;
       return(
         <FormControl component="fieldset" margin="normal" key={id}>
-          <FormLabel component="legend">Q{id+1}. {this.replace(question)}</FormLabel>
+          <FormLabel component="legend">Q{id+1}. {this.convertHTML(question)}</FormLabel>
           <RadioGroup aria-label="question" name={"answer_" + id} value={this.state.answerArray[id]} onChange={this.answerReg}>
-            <FormControlLabel value={this.replace(answers[0])} control={<Radio color="default" />} label={answers[0]} />
-            <FormControlLabel value={this.replace(answers[1])} control={<Radio color="default" />} label={answers[1]} />
-            <FormControlLabel value={this.replace(answers[2])} control={<Radio color="default" />} label={answers[2]} />
-            <FormControlLabel value={this.replace(answers[3])} control={<Radio color="default" />} label={answers[3]} />
+            <FormControlLabel value={answers[0]} control={<Radio color="default" />} label={this.convertHTML(answers[0])} />
+            <FormControlLabel value={answers[1]} control={<Radio color="default" />} label={this.convertHTML(answers[1])} />
+            <FormControlLabel value={answers[2]} control={<Radio color="default" />} label={this.convertHTML(answers[2])} />
+            <FormControlLabel value={answers[3]} control={<Radio color="default" />} label={this.convertHTML(answers[3])} />
           </RadioGroup>
         </FormControl>
       )
