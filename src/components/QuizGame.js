@@ -75,17 +75,29 @@ class QuizGame extends React.Component{
       result: 0})
   }
 
+  replace(str){
+    return str.replace(/&#039;/g, '\'')
+      .replace(/&quot;/g, '\"')
+      .replace(/&eacute;/g, '\é')
+      .replace(/&amp;/g, '\&')
+      .replace(/&oacute;/g, '\ó')
+      .replace(/&pi;/g, '\π')
+      .replace(/&euml;/g, '\ë')
+      .replace(/&rsquo;/g, '\'')
+      .replace(/&deg;/g, '\°')
+  }
+
   quizRender(){
     return this.state.quizArrayClient.map((questions, index) => {
       const { id, question, answers } = questions;
       return(
         <FormControl component="fieldset" margin="normal" key={id}>
-          <FormLabel component="legend">Q{id+1}. {question.replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&eacute;/g, '\é').replace(/&amp;/g, '\&').replace(/&oacute;/g, '\ó').replace(/&pi;/g, '\π').replace(/&euml;/g, '\ë').replace(/&rsquo;/g, '\'').replace(/&deg;/g, '\°')}</FormLabel>
+          <FormLabel component="legend">Q{id+1}. {this.replace(question)}</FormLabel>
           <RadioGroup aria-label="question" name={"answer_" + id} value={this.state.answerArray[id]} onChange={this.answerReg}>
-            <FormControlLabel value={answers[0]} control={<Radio color="default" />} label={answers[0].replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&eacute;/g, '\é').replace(/&amp;/g, '\&').replace(/&oacute;/g, '\ó').replace(/&pi;/g, '\π').replace(/&euml;/g, '\ë').replace(/&rsquo;/g, '\'').replace(/&deg;/g, '\°')} />
-            <FormControlLabel value={answers[1]} control={<Radio color="default" />} label={answers[1].replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&eacute;/g, '\é').replace(/&amp;/g, '\&').replace(/&oacute;/g, '\ó').replace(/&pi;/g, '\π').replace(/&euml;/g, '\ë').replace(/&rsquo;/g, '\'').replace(/&deg;/g, '\°')} />
-            <FormControlLabel value={answers[2]} control={<Radio color="default" />} label={answers[2].replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&eacute;/g, '\é').replace(/&amp;/g, '\&').replace(/&oacute;/g, '\ó').replace(/&pi;/g, '\π').replace(/&euml;/g, '\ë').replace(/&rsquo;/g, '\'').replace(/&deg;/g, '\°')} />
-            <FormControlLabel value={answers[3]} control={<Radio color="default" />} label={answers[3].replace(/&#039;/g, '\'').replace(/&quot;/g, '\"').replace(/&eacute;/g, '\é').replace(/&amp;/g, '\&').replace(/&oacute;/g, '\ó').replace(/&pi;/g, '\π').replace(/&euml;/g, '\ë').replace(/&rsquo;/g, '\'').replace(/&deg;/g, '\°')} />
+            <FormControlLabel value={this.replace(answers[0])} control={<Radio color="default" />} label={answers[0]} />
+            <FormControlLabel value={this.replace(answers[1])} control={<Radio color="default" />} label={answers[1]} />
+            <FormControlLabel value={this.replace(answers[2])} control={<Radio color="default" />} label={answers[2]} />
+            <FormControlLabel value={this.replace(answers[3])} control={<Radio color="default" />} label={answers[3]} />
           </RadioGroup>
         </FormControl>
       )
